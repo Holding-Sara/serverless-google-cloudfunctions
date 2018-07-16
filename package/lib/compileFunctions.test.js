@@ -406,6 +406,9 @@ describe('CompileFunctions', () => {
               event: {
                 eventType: 'foo',
                 resource: 'some-resource',
+                failurePolicy: {
+                  retry: true,
+                }
               },
             },
           ],
@@ -442,6 +445,9 @@ describe('CompileFunctions', () => {
             eventTrigger: {
               eventType: 'foo',
               resource: 'some-resource',
+              failurePolicy: {
+                retry: true,
+              },
             },
             labels: {},
           },
