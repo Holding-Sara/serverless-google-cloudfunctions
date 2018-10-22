@@ -43,6 +43,15 @@ module.exports = {
       funcTemplate.properties.timeout = _.get(funcObject, 'timeout')
         || _.get(this, 'serverless.service.provider.timeout')
         || '60s';
+      funcTemplate.properties.environmentVariables = _.merge(
+        _.get(this, 'serverless.service.provider.environment'),
+        funcObject.environment,
+      );
+
+      if (!_.size(funcTemplate.properties.environmentVariables)) {
+        delete funcTemplate.properties.environmentVariables;
+      }
+
       funcTemplate.properties.labels = _.assign({},
         _.get(this, 'serverless.service.provider.labels') || {},
         _.get(funcObject, 'labels') || {},
@@ -60,13 +69,11 @@ module.exports = {
         const type = funcObject.events[0].event.eventType;
         const path = funcObject.events[0].event.path; //eslint-disable-line
         const resource = funcObject.events[0].event.resource;
-        const failurePolicy = funcObject.events[0].event.failurePolicy;
 
         funcTemplate.properties.eventTrigger = {};
         funcTemplate.properties.eventTrigger.eventType = type;
-        funcTemplate.properties.eventTrigger.resource = resource;
         if (path) funcTemplate.properties.eventTrigger.path = path;
-        if (failurePolicy) funcTemplate.properties.eventTrigger.failurePolicy = failurePolicy;
+        funcTemplate.properties.eventTrigger.resource = resource;
       }
 
       this.serverless.service.provider.compiledConfigurationTemplate.resources.push(funcTemplate);
