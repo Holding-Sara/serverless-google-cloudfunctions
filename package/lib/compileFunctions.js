@@ -59,7 +59,7 @@ module.exports = {
       );
 
       if (this.serverless.service.provider.credentials) {
-        funcTemplate.properties.serviceAccountEmail = this.provider.getAuthClient().email;
+        funcTemplate.properties.serviceAccount = this.provider.getAuthClient().email;
       }
 
       const eventType = Object.keys(funcObject.events[0])[0];
@@ -131,7 +131,7 @@ const validateEventsProperty = (funcObject, functionName) => {
 
 const getFunctionTemplate = (funcObject, region, sourceArchiveUrl) => { //eslint-disable-line
   return {
-    type: 'cloudfunctions.v1.function',
+    type: 'cloudfunctions.v1beta2.function',
     name: funcObject.name,
     properties: {
       location: region,
