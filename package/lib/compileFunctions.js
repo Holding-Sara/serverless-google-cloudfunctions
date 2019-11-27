@@ -71,14 +71,17 @@ module.exports = {
         funcTemplate.properties.httpsTrigger.url = url;
       }
       if (eventType === 'event') {
-        const type = funcObject.events[0].event.eventType;
-        const path = funcObject.events[0].event.path; //eslint-disable-line
-        const resource = funcObject.events[0].event.resource;
+        const event = funcObject.events[0].event;
+        const type = event.eventType;
+        const path = event.path; //eslint-disable-line
+        const resource = event.resource;
+        const retryPolicy = event.retryPolicy || event.failurePolicy;
 
         funcTemplate.properties.eventTrigger = {};
         funcTemplate.properties.eventTrigger.eventType = type;
-        if (path) funcTemplate.properties.eventTrigger.path = path;
         funcTemplate.properties.eventTrigger.resource = resource;
+        if (path) funcTemplate.properties.eventTrigger.path = path;
+        if (retryPolicy) funcTemplate.properties.eventTrigger.retryPolicy = retryPolicy;
       }
 
       this.serverless.service.provider.compiledConfigurationTemplate.resources.push(funcTemplate);
