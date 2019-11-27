@@ -131,7 +131,7 @@ const validateEventsProperty = (funcObject, functionName) => {
 
 const getFunctionTemplate = (funcObject, region, sourceArchiveUrl) => { //eslint-disable-line
   return {
-    type: 'cloudfunctions.v1beta2.function',
+    type: 'cloudfunctions.v1.function',
     name: funcObject.name,
     properties: {
       location: region,
