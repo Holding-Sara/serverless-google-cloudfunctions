@@ -75,13 +75,13 @@ module.exports = {
         const type = event.eventType;
         const path = event.path; //eslint-disable-line
         const resource = event.resource;
-        const retryPolicy = event.retryPolicy || event.failurePolicy;
+        const failurePolicy = event.failurePolicy;
 
         funcTemplate.properties.eventTrigger = {};
         funcTemplate.properties.eventTrigger.eventType = type;
         funcTemplate.properties.eventTrigger.resource = resource;
         if (path) funcTemplate.properties.eventTrigger.path = path;
-        if (retryPolicy) funcTemplate.properties.eventTrigger.retryPolicy = retryPolicy;
+        if (failurePolicy) funcTemplate.properties.eventTrigger.failurePolicy = failurePolicy;
       }
 
       this.serverless.service.provider.compiledConfigurationTemplate.resources.push(funcTemplate);
