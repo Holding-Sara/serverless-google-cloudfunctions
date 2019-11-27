@@ -58,6 +58,10 @@ module.exports = {
         _.get(funcObject, 'labels') || {} // eslint-disable-line comma-dangle
       );
 
+      if (this.serverless.service.provider.credentials) {
+        funcTemplate.properties.serviceAccountEmail = this.provider.getAuthClient().email;
+      }
+
       const eventType = Object.keys(funcObject.events[0])[0];
 
       if (eventType === 'http') {
